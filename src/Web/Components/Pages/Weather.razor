@@ -3,7 +3,7 @@
 
 <PageTitle>Weather</PageTitle>
 
-<h1 class="text-3xl font-bold mb-4">Weather</h1>
+<h1 class="mb-4 text-3xl font-bold">Weather</h1>
 
 <p class="">This component demonstrates showing data. @RendererInfo.Name</p>
 
@@ -15,23 +15,23 @@
 }
 else
 {
-  <table class="table-auto border-collapse w-full text-left text-gray-800">
+  <table class="w-full table-auto border-collapse text-left text-gray-800">
     <thead>
     <tr class="bg-gray-200">
-      <th class="px-4 py-2 border-b">Date</th>
-      <th class="px-4 py-2 border-b" aria-label="Temperature in Celsius">Temp. (C)</th>
-      <th class="px-4 py-2 border-b" aria-label="Temperature in Fahrenheit">Temp. (F)</th>
-      <th class="px-4 py-2 border-b">Summary</th>
+      <th class="border-b px-4 py-2">Date</th>
+      <th class="border-b px-4 py-2" aria-label="Temperature in Celsius">Temp. (C)</th>
+      <th class="border-b px-4 py-2" aria-label="Temperature in Fahrenheit">Temp. (F)</th>
+      <th class="border-b px-4 py-2">Summary</th>
     </tr>
     </thead>
     <tbody>
     @foreach (var forecast in forecasts)
     {
       <tr class="hover:bg-gray-100">
-        <td class="px-4 py-2 border-b">@forecast.Date.ToShortDateString()</td>
-        <td class="px-4 py-2 border-b">@forecast.TemperatureC</td>
-        <td class="px-4 py-2 border-b">@forecast.TemperatureF</td>
-        <td class="px-4 py-2 border-b">@forecast.Summary</td>
+        <td class="border-b px-4 py-2">@forecast.Date.ToShortDateString()</td>
+        <td class="border-b px-4 py-2">@forecast.TemperatureC</td>
+        <td class="border-b px-4 py-2">@forecast.TemperatureF</td>
+        <td class="border-b px-4 py-2">@forecast.Summary</td>
       </tr>
     }
     </tbody>
@@ -39,29 +39,29 @@ else
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+  private WeatherForecast[]? forecasts;
 
-    protected override async Task OnInitializedAsync()
+  protected override async Task OnInitializedAsync()
+  {
+    // Simulate asynchronous loading to demonstrate streaming rendering
+    await Task.Delay(500);
+
+    var startDate = DateOnly.FromDateTime(DateTime.Now);
+    string[]? summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
+    forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
     {
-        // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(500);
+      Date = startDate.AddDays(index),
+      TemperatureC = Random.Shared.Next(-20, 55),
+      Summary = summaries[Random.Shared.Next(summaries.Length)],
+    }).ToArray();
+  }
 
-        var startDate = DateOnly.FromDateTime(DateTime.Now);
-        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-        forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = startDate.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = summaries[Random.Shared.Next(summaries.Length)]
-        }).ToArray();
-    }
-
-    private class WeatherForecast
-    {
-        public DateOnly Date { get; set; }
-        public int TemperatureC { get; set; }
-        public string? Summary { get; set; }
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
+  private class WeatherForecast
+  {
+    public DateOnly Date { get; set; }
+    public int TemperatureC { get; set; }
+    public string? Summary { get; set; }
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+  }
 
 }

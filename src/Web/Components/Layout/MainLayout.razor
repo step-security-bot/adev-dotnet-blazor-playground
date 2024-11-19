@@ -1,25 +1,26 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="flex flex-col h-screen">
+<div class="flex h-screen flex-col">
   <div class="flex flex-grow">
-    <div class="sidebar bg-gray-800 text-white w-64">
+    <div class="w-64 bg-gray-800 text-white sidebar">
       <NavMenu/>
     </div>
 
-    <main class="flex-grow flex flex-col">
-      <div class="top-row px-4 py-2 bg-gray-100 border-b border-gray-200">
-        <a href="https://learn.microsoft.com/aspnet/core/" target="_blank" class="text-blue-600 hover:underline">About</a>
+    <main class="flex flex-grow flex-col">
+      <div class="border-b border-gray-200 bg-gray-100 px-4 py-2 top-row">
+        <a href="https://learn.microsoft.com/aspnet/core/" target="_blank"
+           class="text-blue-600 hover:underline">About</a>
       </div>
 
-      <article class="content px-4 py-6 bg-white flex-grow">
+      <article class="flex-grow bg-white px-4 py-6 content">
         @Body
       </article>
     </main>
   </div>
 </div>
 
-<div id="blazor-error-ui" data-nosnippet class="fixed bottom-0 left-0 w-full bg-red-500 text-white text-center p-2">
+<div id="blazor-error-ui" data-nosnippet class="fixed bottom-0 left-0 w-full bg-red-500 p-2 text-center text-white">
   An unhandled error has occurred.
-  <a href="." class="text-blue-300 underline ml-2">Reload</a>
-  <span class="dismiss cursor-pointer ml-2">🗙</span>
+  <a href="." class="ml-2 text-blue-300 underline">Reload</a>
+  <span class="ml-2 cursor-pointer dismiss">🗙</span>
 </div>

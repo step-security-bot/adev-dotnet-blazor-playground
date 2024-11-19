@@ -3,18 +3,18 @@
 
 <PageTitle>Error</PageTitle>
 
-<h1 class="text-red-600 font-bold text-3xl">Error.</h1>
-<h2 class="text-red-600 font-semibold text-xl">An error occurred while processing your request.</h2>
+<h1 class="text-3xl font-bold text-red-600">Error.</h1>
+<h2 class="text-xl font-semibold text-red-600">An error occurred while processing your request.</h2>
 
 @if (ShowRequestId)
 {
   <p class="mt-4">
     <strong class="font-semibold">Request ID:</strong> <code
-      class="bg-gray-100 text-gray-800 px-1 py-0.5 rounded">@RequestId</code>
+      class="rounded bg-gray-100 px-1 py-0.5 text-gray-800">@RequestId</code>
   </p>
 }
 
-<h3 class="text-lg font-semibold mt-6">Development Mode</h3>
+<h3 class="mt-6 text-lg font-semibold">Development Mode</h3>
 <p class="mt-2 text-gray-700">
   Swapping to <strong class="font-semibold">Development</strong> environment will display more detailed information
   about the error that occurred.
@@ -35,7 +35,9 @@
   private string? RequestId { get; set; }
   private bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
-  protected override void OnInitialized() =>
+  protected override void OnInitialized()
+  {
     RequestId = Activity.Current?.Id ?? HttpContext?.TraceIdentifier;
+  }
 
 }

@@ -2,7 +2,15 @@
 module.exports = {
   content: ['./src/**/*.{html,razor}'],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        browser: {raw: '(display-mode:browser)'},
+        standalone: {raw: '(display-mode:standalone)'},
+      },
+      data: {
+        active: 'active="true"',
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/typography'),
