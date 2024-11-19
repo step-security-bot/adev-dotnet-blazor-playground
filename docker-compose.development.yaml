@@ -1,0 +1,7 @@
+﻿services:
+  web:
+    build:
+      args:
+        - BUILD_CONFIGURATION=Release
+    ports:
+      - 5049:8080
