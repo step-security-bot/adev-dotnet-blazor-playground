@@ -1,9 +1,13 @@
 ﻿@page "/counter"
 @rendermode InteractiveAuto
 
+@inject IConfiguration Configuration
+
 <PageTitle>Counter</PageTitle>
 
-<h1 class="mb-4 text-2xl font-bold">Counter @RendererInfo.Name</h1>
+<h1 class="mb-4 text-2xl font-bold">Counter</h1>
+<h2 class="mb-4 text-xl font-bold">I am using @RendererInfo.Name rendering mode</h2>
+<h2 class="mb-4 text-xl font-bold">SomeConfig value is: <span class="font-semibold italic">@Configuration["SomeConfig"]</span></h2>
 
 <p role="status" class="mb-4 text-lg text-gray-700">Current count: @_currentCount</p>
 

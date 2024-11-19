@@ -1,11 +1,14 @@
 ﻿@page "/weather"
 @attribute [StreamRendering]
+@inject IConfiguration Configuration
 
 <PageTitle>Weather</PageTitle>
 
 <h1 class="mb-4 text-3xl font-bold">Weather</h1>
+<h2 class="mb-4 text-xl font-bold">I am using @RendererInfo.Name rendering mode</h2>
+<h2 class="mb-4 text-xl font-bold">SomeConfig value is: <span class="font-semibold italic">@Configuration["SomeConfig"]</span></h2>
 
-<p class="">This component demonstrates showing data. @RendererInfo.Name</p>
+<p class="">This component demonstrates showing data.</p>
 
 @if (forecasts == null)
 {
