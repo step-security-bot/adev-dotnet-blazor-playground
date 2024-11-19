@@ -3,39 +3,39 @@
 
 <PageTitle>Weather</PageTitle>
 
-<h1>Weather</h1>
+<h1 class="text-3xl font-bold mb-4">Weather</h1>
 
-<p>This component demonstrates showing data. @RendererInfo.Name</p>
+<p class="">This component demonstrates showing data. @RendererInfo.Name</p>
 
 @if (forecasts == null)
 {
-    <p>
-        <em>Loading...</em>
-    </p>
+  <p class="italic">
+    <em>Loading...</em>
+  </p>
 }
 else
 {
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Date</th>
-            <th aria-label="Temperature in Celsius">Temp. (C)</th>
-            <th aria-label="Temperature in Farenheit">Temp. (F)</th>
-            <th>Summary</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var forecast in forecasts)
-        {
-            <tr>
-                <td>@forecast.Date.ToShortDateString()</td>
-                <td>@forecast.TemperatureC</td>
-                <td>@forecast.TemperatureF</td>
-                <td>@forecast.Summary</td>
-            </tr>
-        }
-        </tbody>
-    </table>
+  <table class="table-auto border-collapse w-full text-left text-gray-800">
+    <thead>
+    <tr class="bg-gray-200">
+      <th class="px-4 py-2 border-b">Date</th>
+      <th class="px-4 py-2 border-b" aria-label="Temperature in Celsius">Temp. (C)</th>
+      <th class="px-4 py-2 border-b" aria-label="Temperature in Fahrenheit">Temp. (F)</th>
+      <th class="px-4 py-2 border-b">Summary</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var forecast in forecasts)
+    {
+      <tr class="hover:bg-gray-100">
+        <td class="px-4 py-2 border-b">@forecast.Date.ToShortDateString()</td>
+        <td class="px-4 py-2 border-b">@forecast.TemperatureC</td>
+        <td class="px-4 py-2 border-b">@forecast.TemperatureF</td>
+        <td class="px-4 py-2 border-b">@forecast.Summary</td>
+      </tr>
+    }
+    </tbody>
+  </table>
 }
 
 @code {
