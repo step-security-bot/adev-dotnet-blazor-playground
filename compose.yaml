@@ -1,0 +1,12 @@
+﻿services:
+  web:
+    image: web
+    build:
+      context: .
+      dockerfile: Web/Web/Dockerfile
+
+  web.client:
+    image: web.client
+    build:
+      context: .
+      dockerfile: Web/Web.Client/Dockerfile

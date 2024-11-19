@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "src\Web\Web.csproj", "{416663CA-2242-42BA-B4A3-D2C3C163A926}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Client", "src\Web.Client\Web.Client.csproj", "{59BAE6FF-3ED4-458E-A4FE-543BCA16A38E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F2EED11D-C97C-4702-A11F-CC5F565A539D}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{416663CA-2242-42BA-B4A3-D2C3C163A926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{416663CA-2242-42BA-B4A3-D2C3C163A926}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{416663CA-2242-42BA-B4A3-D2C3C163A926}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{416663CA-2242-42BA-B4A3-D2C3C163A926}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59BAE6FF-3ED4-458E-A4FE-543BCA16A38E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59BAE6FF-3ED4-458E-A4FE-543BCA16A38E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59BAE6FF-3ED4-458E-A4FE-543BCA16A38E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59BAE6FF-3ED4-458E-A4FE-543BCA16A38E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
