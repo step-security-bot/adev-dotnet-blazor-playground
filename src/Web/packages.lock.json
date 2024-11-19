@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "dependencies": {
     "net9.0": {
       "Microsoft.AspNetCore.Components.WebAssembly.Server": {
@@ -50,18 +50,6 @@
           "Microsoft.Extensions.DependencyInjection": "9.0.0",
           "Microsoft.Extensions.Primitives": "9.0.0",
           "Microsoft.JSInterop": "9.0.0"
-        }
-      },
-      "Microsoft.AspNetCore.Components.WebAssembly": {
-        "type": "Transitive",
-        "resolved": "9.0.0",
-        "contentHash": "RwDygFGa1NdKh7N4S6P2xgxB0LeluLss/iZRdNnmOwN1zgpdLH9AnCnTIgDBAW7rhDjcPGrcjsDLNivwDRYwEQ==",
-        "dependencies": {
-          "Microsoft.AspNetCore.Components.Web": "9.0.0",
-          "Microsoft.Extensions.Configuration.Binder": "9.0.0",
-          "Microsoft.Extensions.Configuration.Json": "9.0.0",
-          "Microsoft.Extensions.Logging": "9.0.0",
-          "Microsoft.JSInterop.WebAssembly": "9.0.0"
         }
       },
       "Microsoft.AspNetCore.Metadata": {
@@ -202,6 +190,19 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.AspNetCore.Components.WebAssembly": "[9.0.0, )"
+        }
+      },
+      "Microsoft.AspNetCore.Components.WebAssembly": {
+        "type": "CentralTransitive",
+        "requested": "[9.0.0, )",
+        "resolved": "9.0.0",
+        "contentHash": "RwDygFGa1NdKh7N4S6P2xgxB0LeluLss/iZRdNnmOwN1zgpdLH9AnCnTIgDBAW7rhDjcPGrcjsDLNivwDRYwEQ==",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.Web": "9.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "9.0.0",
+          "Microsoft.Extensions.Configuration.Json": "9.0.0",
+          "Microsoft.Extensions.Logging": "9.0.0",
+          "Microsoft.JSInterop.WebAssembly": "9.0.0"
         }
       }
     }
