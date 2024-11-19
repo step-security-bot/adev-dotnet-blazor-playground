@@ -3,10 +3,10 @@
     image: web
     build:
       context: .
-      dockerfile: Web/Web/Dockerfile
+      dockerfile: src/Web/Dockerfile
 
   web.client:
     image: web.client
     build:
       context: .
-      dockerfile: Web/Web.Client/Dockerfile
+      dockerfile: src/Web.Client/Dockerfile
