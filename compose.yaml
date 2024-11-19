@@ -1,8 +1,9 @@
 ﻿services:
   web:
-    image: web
+    image: blazor-playground
     build:
       context: .
+      target: final
       dockerfile: src/Web/Dockerfile
     ports:
       - 5049:8080

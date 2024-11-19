@@ -15,7 +15,7 @@
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <Optimize>true</Optimize>
   </PropertyGroup>
-  <PropertyGroup>
+  <PropertyGroup Label="Supply chain auditing">
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <NuGetAudit>true</NuGetAudit>
     <NuGetAuditMode>all</NuGetAuditMode>
