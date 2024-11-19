@@ -4,9 +4,5 @@
     build:
       context: .
       dockerfile: src/Web/Dockerfile
-
-  web.client:
-    image: web.client
-    build:
-      context: .
-      dockerfile: src/Web.Client/Dockerfile
+    ports:
+      - 5049:8080
