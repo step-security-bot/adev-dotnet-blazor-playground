@@ -10,7 +10,7 @@
 
 <p class="">This component demonstrates showing data.</p>
 
-@if (forecasts == null)
+@if (_forecasts == null)
 {
   <p class="italic">
     <em>Loading...</em>
@@ -28,7 +28,7 @@ else
     </tr>
     </thead>
     <tbody>
-    @foreach (var forecast in forecasts)
+    @foreach (var forecast in _forecasts)
     {
       <tr class="hover:bg-gray-100">
         <td class="border-b px-4 py-2">@forecast.Date.ToShortDateString()</td>
@@ -42,7 +42,7 @@ else
 }
 
 @code {
-  private WeatherForecast[]? forecasts;
+  private WeatherForecast[]? _forecasts;
 
   protected override async Task OnInitializedAsync()
   {
@@ -50,8 +50,8 @@ else
     await Task.Delay(500);
 
     var startDate = DateOnly.FromDateTime(DateTime.Now);
-    string[]? summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-    forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+    string[] summaries = ["Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"];
+    _forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
     {
       Date = startDate.AddDays(index),
       TemperatureC = Random.Shared.Next(-20, 55),
