@@ -7,11 +7,11 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Directory.Packages.props", "Directory.Build.props", "nuget.config", "./"]
-COPY ["src/Web/Web.csproj", "Web/"]
-COPY ["src/Web.Client/Web.Client.csproj", "Web.Client/"]
-RUN dotnet restore "Web/Web.csproj"
+COPY ["src/Web/Web.csproj", "src/Web/"]
+COPY ["src/Web.Client/Web.Client.csproj", "src/Web.Client/"]
+RUN dotnet restore "src/Web/Web.csproj"
 COPY . .
-WORKDIR "/src/Web"
+WORKDIR "/src/src/Web"
 RUN dotnet build "Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
