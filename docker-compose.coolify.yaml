@@ -1,0 +1,13 @@
+﻿services:
+  web:
+    image: blazor-playground
+    build:
+      context: .
+      target: final
+      dockerfile: src/Web/Dockerfile
+    environment:
+      - SERVICE_FQDN_WEB_8080
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Production}
+      - ASPNETCORE_DETAILEDERRORS=${ASPNETCORE_DETAILEDERRORS:-true}
+      - ASPNETCORE_APPLICATIONNAME=${ASPNETCORE_APPLICATIONNAME:-blazor-playground}
+      - ASPNETCORE_URLS=${ASPNETCORE_URLS:-http://*:8080}

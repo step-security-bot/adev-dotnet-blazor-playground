@@ -11,7 +11,7 @@ public class MyResources(IHostEnvironment environment, VersionProvider versionPr
     public Resource Detect()
     {
         var resources = ResourceBuilder.CreateDefault()
-            .AddService("blazor.playground", null, versionProvider.Version)
+            .AddService(environment.ApplicationName, null, versionProvider.Version)
             .AddEnvironmentVariableDetector()
             .AddAttributes([
                 new ("dotnet.version", RuntimeInformation.FrameworkDescription),
