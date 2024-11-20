@@ -1,13 +1,16 @@
 ﻿@page "/counter"
+@using System.Diagnostics.CodeAnalysis
 @rendermode InteractiveAuto
 
 @inject IConfiguration Configuration
+@inject ILogger<Counter> Logger
 
 <PageTitle>Counter</PageTitle>
 
 <h1 class="mb-4 text-2xl font-bold">Counter</h1>
 <h2 class="mb-4 text-xl font-bold">I am using @RendererInfo.Name rendering mode</h2>
-<h2 class="mb-4 text-xl font-bold">SomeConfig value is: <span class="font-semibold italic">@Configuration["SomeConfig"]</span></h2>
+<h2 class="mb-4 text-xl font-bold">SomeConfig value is: <span
+    class="font-semibold italic">@Configuration["SomeConfig"]</span></h2>
 
 <p role="status" class="mb-4 text-lg text-gray-700">Current count: @_currentCount</p>
 
@@ -17,13 +20,34 @@
   Click me
 </button>
 
+<button
+  class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
+  @onclick="ThrowException">
+  Throw exception
+</button>
+
 
 @code {
   private int _currentCount;
 
   private void IncrementCount()
   {
+    Logger.LogInformation("IncrementCount was {Count}", _currentCount);
     _currentCount++;
+  }
+
+  [DoesNotReturn]
+  private static void ThrowException()
+  {
+    throw new InvalidOperationException("Oh no! Something went wrong!")
+    {
+      HelpLink = "https://github.com/alexaka1/adev-dotnet-blazor-playground/issues/new",
+      Data =
+      {
+        { "UserId", 42 },
+        { "UserName", "John Wick" },
+      },
+    };
   }
 
 }

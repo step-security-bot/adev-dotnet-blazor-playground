@@ -4,21 +4,26 @@
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
-    <PackageVersion Include="OpenTelemetry" Version="1.10.0" />
-    <PackageVersion Include="OpenTelemetry.AutoInstrumentation.Runtime.Native" Version="1.9.0" />
-    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.10.0" />
-    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.10.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.9.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.9.0" />
-    <PackageVersion Include="Serilog.AspNetCore" Version="8.0.3" />
-    <PackageVersion Include="Serilog.Exceptions" Version="8.4.0" />
-    <PackageVersion Include="Serilog.Expressions" Version="5.0.0" />
-    <PackageVersion Include="Serilog.Sinks.Async" Version="2.1.0" />
-    <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
-    <PackageVersion Include="Serilog.Sinks.OpenTelemetry" Version="4.1.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0"/>
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.0"/>
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0"/>
+    <PackageVersion Include="OpenTelemetry" Version="1.10.0"/>
+    <PackageVersion Include="OpenTelemetry.AutoInstrumentation.Runtime.Native" Version="1.9.0"/>
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.10.0"/>
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.10.0"/>
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.9.0"/>
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.9.0"/>
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.9.0"/>
+    <PackageVersion Include="Serilog" Version="4.1.0"/>
+    <PackageVersion Include="Serilog.AspNetCore" Version="8.0.3"/>
+    <PackageVersion Include="Serilog.Exceptions" Version="8.4.0"/>
+    <PackageVersion Include="Serilog.Expressions" Version="5.0.0"/>
+    <PackageVersion Include="Serilog.Extensions.Hosting" Version="8.0.0"/>
+    <PackageVersion Include="Serilog.Extensions.Logging" Version="8.0.0"/>
+    <PackageVersion Include="Serilog.Settings.Configuration" Version="8.0.4"/>
+    <PackageVersion Include="Serilog.Sinks.Async" Version="2.1.0"/>
+    <PackageVersion Include="Serilog.Sinks.BrowserConsole" Version="8.0.0"/>
+    <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0"/>
+    <PackageVersion Include="Serilog.Sinks.OpenTelemetry" Version="4.1.1"/>
   </ItemGroup>
 </Project>

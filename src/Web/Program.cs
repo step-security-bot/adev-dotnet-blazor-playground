@@ -3,7 +3,6 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
 using Serilog.Debugging;
-using Serilog.Events;
 using Serilog.Exceptions;
 using Shared;
 using Web.Components;
@@ -11,11 +10,11 @@ using _Imports = Web.Client._Imports;
 
 // Startup logger
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+    .MinimumLevel.Warning()
     .Enrich.FromLogContext()
     .Enrich.WithExceptionDetails()
     .WriteTo.Console()
+    .Enrich.WithProperty("AppSource", "ASP.NET")
     .CreateBootstrapLogger();
 
 WebApplication app;
@@ -112,4 +111,8 @@ catch (Exception e)
 {
     logger.LogCritical(e, "Application has crashed");
     throw;
+}
+finally
+{
+    await Log.CloseAndFlushAsync();
 }

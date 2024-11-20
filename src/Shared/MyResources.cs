@@ -11,11 +11,12 @@ public class MyResources(IHostEnvironment environment, VersionProvider versionPr
     public Resource Detect()
     {
         var resources = ResourceBuilder.CreateDefault()
-            .AddService(Environment.GetEnvironmentVariable("APPLICATION_NAME") ?? "blazor-playground", null, versionProvider.Version)
+            .AddService(Environment.GetEnvironmentVariable("APPLICATION_NAME") ?? "blazor-playground", null,
+                versionProvider.Version)
             .AddEnvironmentVariableDetector()
             .AddAttributes([
-                new ("dotnet.version", RuntimeInformation.FrameworkDescription),
-                new ("deployment.environment.name", environment.EnvironmentName),
+                new KeyValuePair<string, object>("dotnet.version", RuntimeInformation.FrameworkDescription),
+                new KeyValuePair<string, object>("deployment.environment.name", environment.EnvironmentName),
             ])
             .Build();
         return resources;
@@ -26,6 +27,8 @@ public class ResourceCollection(IEnumerable<IResourceDetector> resources) : IRes
 {
     public Resource Detect()
     {
-        return new Resource(resources.SelectMany(r => r.Detect().Attributes));
+        return ResourceBuilder.CreateEmpty()
+            .AddAttributes(resources.SelectMany(r => r.Detect().Attributes))
+            .Build();
     }
 }
