@@ -18,6 +18,7 @@ WORKDIR /src
 COPY ["Directory.Packages.props", "Directory.Build.props", "nuget.config", "./"]
 COPY ["src/Web/Web.csproj", "src/Web/"]
 COPY ["src/Web.Client/Web.Client.csproj", "src/Web.Client/"]
+COPY ["src/Shared/Shared.csproj", "src/Shared/"]
 RUN dotnet restore "src/Web/Web.csproj"
 COPY . .
 COPY --from=tailwindcss /src/src/Web/wwwroot/styles/app.css ./src/Web/wwwroot/styles/app.css

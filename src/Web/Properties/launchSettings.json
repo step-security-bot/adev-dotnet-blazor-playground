@@ -9,7 +9,7 @@
       "applicationUrl": "http://localhost:5049",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_APPLICATIONNAME": "blazor.playground"
+        "APPLICATION_NAME": "blazor.playground"
       }
     },
     "https": {
@@ -20,7 +20,7 @@
       "applicationUrl": "https://localhost:7195;http://localhost:5049",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_APPLICATIONNAME": "blazor.playground"
+        "APPLICATION_NAME": "blazor.playground"
       }
     }
   }
