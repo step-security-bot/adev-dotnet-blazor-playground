@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.JSInterop;
 using Serilog;
 using Serilog.Debugging;
 using Serilog.Exceptions;
@@ -34,6 +35,10 @@ try
             //         )
             // ))
             .Enrich.WithExceptionDetails()
+            .WriteTo.Logger(l =>
+                l.Filter.ByExcluding("SourceContext = 'Microsoft.Hosting.Lifetime'").WriteTo
+                    // https://github.com/serilog/serilog-sinks-browserconsole/issues/20
+                    .BrowserConsole(jsRuntime: sp.GetRequiredService<IJSRuntime>()))
             ;
     });
     app = builder.Build();

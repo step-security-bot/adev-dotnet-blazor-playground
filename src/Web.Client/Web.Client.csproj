@@ -13,7 +13,6 @@
     <PackageReference Include="Serilog.Exceptions"/>
     <PackageReference Include="Serilog.Expressions"/>
     <PackageReference Include="Serilog.Extensions.Hosting"/>
-    <PackageReference Include="Serilog.Extensions.Logging"/>
     <PackageReference Include="Serilog.Settings.Configuration"/>
     <PackageReference Include="Serilog.Sinks.BrowserConsole"/>
   </ItemGroup>

@@ -9,13 +9,28 @@
 
 <h1 class="mb-4 text-2xl font-bold">Counter</h1>
 <h2 class="mb-4 text-xl font-bold">I am using @RendererInfo.Name rendering mode</h2>
-<h2 class="mb-4 text-xl font-bold">SomeConfig value is: <span
-    class="font-semibold italic">@Configuration["SomeConfig"]</span></h2>
+<h2 class="mb-4 text-xl font-bold">
+  SomeConfig value is:
+  <span class="font-semibold italic">
+    @Configuration["SomeConfig"]
+  </span>
+</h2>
 
-<p role="status" class="mb-4 text-lg text-gray-700">Current count: @_currentCount</p>
+<p role="status" class="mb-4 text-lg text-gray-700 data-[divisible-by-five='true']:bg-green-300"
+   data-divisible-by-five="@ShowGreen().ToString().ToLowerInvariant()">Current count: @_currentCount</p>
+@if (ShowGreen())
+{
+  Logger.LogInformation("Current count {Count} is divisible by {Dividend}, so it is green", _currentCount, 5);
+  <p class="mb-4 text-pretty">Current count is divisible by 5, so it is green. This paragraph was created by Razor
+    templating, but the
+    color is set by Tailwind via a data- attribute.</p>
+}
+@{
+  Logger.LogInformation("This is run on every render, just like React");
+}
 
 <button
-  class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+  class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 "
   @onclick="IncrementCount">
   Click me
 </button>
@@ -30,10 +45,15 @@
 @code {
   private int _currentCount;
 
+  protected override void OnInitialized()
+  {
+    Logger.LogInformation("Hello from Counter.razor");
+  }
+
   private void IncrementCount()
   {
-    Logger.LogInformation("IncrementCount was {Count}", _currentCount);
     _currentCount++;
+    Logger.LogInformation("Current count is {Count}", _currentCount);
   }
 
   [DoesNotReturn]
@@ -48,6 +68,11 @@
         { "UserName", "John Wick" },
       },
     };
+  }
+
+  private bool ShowGreen()
+  {
+    return _currentCount % 5 == 0;
   }
 
 }
