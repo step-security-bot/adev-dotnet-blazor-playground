@@ -1,6 +1,5 @@
 ﻿services:
   web:
-    image: blazor-playground
     build:
       context: .
       target: final
@@ -9,5 +8,5 @@
       - SERVICE_FQDN_WEB_8080
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Production}
       - ASPNETCORE_DETAILEDERRORS=${ASPNETCORE_DETAILEDERRORS:-true}
-      - APPLICATION_NAME=${APPLICATION_NAME:-blazor-playground}
+      - APPLICATION_NAME=${APPLICATION_NAME:-blazor.playground}
       - ASPNETCORE_URLS=${ASPNETCORE_URLS:-http://*:8080}
