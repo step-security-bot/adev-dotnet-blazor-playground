@@ -1,11 +1,11 @@
 ﻿services:
-  web:
+  blazorapp:
     build:
       context: .
       target: final
       dockerfile: src/Web/Dockerfile
     environment:
-      - SERVICE_FQDN_WEB_8080
+      - SERVICE_FQDN_BLAZORAPP_8080
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Production}
       - ASPNETCORE_DETAILEDERRORS=${ASPNETCORE_DETAILEDERRORS:-true}
       - APPLICATION_NAME=${APPLICATION_NAME:-blazor.playground}
