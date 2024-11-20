@@ -74,6 +74,7 @@ try
 catch (Exception e)
 {
     Log.Fatal(e, "Startup failed");
+    await Log.CloseAndFlushAsync();
     throw;
 }
 

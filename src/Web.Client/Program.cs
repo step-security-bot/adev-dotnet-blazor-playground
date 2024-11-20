@@ -46,6 +46,7 @@ try
 catch (Exception e)
 {
     Log.Fatal(e, "Startup failed in WebAssembly");
+    await Log.CloseAndFlushAsync();
     throw;
 }
 
