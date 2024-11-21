@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.JSInterop;
+using OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -36,17 +37,30 @@ try
     builder.Services.AddSingleton<IResourceDetector, ClientSideResource>();
     builder.Services.AddSingleton<ResourceCollection>();
 
-    // builder.Services.AddOpenTelemetry()
-    //     .ConfigureResource(r => r.AddDetector(s => s.GetRequiredService<ResourceCollection>()))
-    //     .WithMetrics(metrics => metrics
-    //         .AddRuntimeInstrumentation()
-    //         .AddHttpClientInstrumentation()
-    //         .AddOtlpExporter()
-    //     )
-    //     .WithTracing(tracing => tracing
-    //         .AddHttpClientInstrumentation()
-    //         .AddOtlpExporter()
-    //     );
+    builder.Services.AddOpenTelemetry()
+        .ConfigureResource(r => r.AddDetector(s => s.GetRequiredService<ResourceCollection>()))
+        .WithMetrics(metrics => metrics
+            .AddRuntimeInstrumentation()
+            .AddHttpClientInstrumentation()
+            .AddOtlpExporter(x =>
+            {
+                x.Endpoint = new Uri("http://localhost:4318/v1/metrics");
+                x.Protocol = OtlpExportProtocol.HttpProtobuf;
+                x.HttpClientFactory = () => new HttpClient();
+            })
+            .AddConsoleExporter()
+        )
+        .WithTracing(tracing => tracing
+            .AddHttpClientInstrumentation()
+            .AddSource(ClientInstrumentation.ActivitySource.Name)
+            .AddOtlpExporter(x =>
+            {
+                x.Endpoint = new Uri("http://localhost:4318/v1/traces");
+                x.Protocol = OtlpExportProtocol.HttpProtobuf;
+                x.HttpClientFactory = () => new HttpClient();
+            })
+            .AddConsoleExporter()
+        );
 
 
     builder.Logging.ClearProviders();
@@ -55,11 +69,13 @@ try
     {
         loggerConfiguration.ReadFrom.Configuration(configurationBuildTime)
             // .WriteTo.OpenTelemetry(openTelemetrySinkOptions =>
+            // {
             //     openTelemetrySinkOptions.ResourceAttributes =
             //         new Dictionary<string, object>(
             //             sp.GetRequiredService<ResourceCollection>().Detect().Attributes
-            //         )
-            // )
+            //         );
+            //     openTelemetrySinkOptions.OnBeginSuppressInstrumentation = OpenTelemetry.SuppressInstrumentationScope.Begin;
+            // })
             .Enrich.WithExceptionDetails()
             .WriteTo.Logger(l =>
                 l.Filter.ByExcluding("SourceContext = 'Microsoft.Hosting.Lifetime'").WriteTo

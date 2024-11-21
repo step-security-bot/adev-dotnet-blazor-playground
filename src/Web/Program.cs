@@ -64,11 +64,13 @@ try
     {
         loggerConfiguration.ReadFrom.Configuration(configurationBuildTime)
             .WriteTo.Async(c => c.OpenTelemetry(openTelemetrySinkOptions =>
+            {
                 openTelemetrySinkOptions.ResourceAttributes =
                     new Dictionary<string, object>(
                         sp.GetRequiredService<ResourceCollection>().Detect().Attributes
-                    )
-            ))
+                    );
+                openTelemetrySinkOptions.OnBeginSuppressInstrumentation = OpenTelemetry.SuppressInstrumentationScope.Begin;
+            }))
             .Enrich.WithExceptionDetails()
             ;
     });

@@ -445,6 +445,7 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.AspNetCore.Components.WebAssembly": "[9.0.0, )",
+          "OpenTelemetry.Exporter.Console": "[1.10.0, )",
           "OpenTelemetry.Exporter.OpenTelemetryProtocol": "[1.10.0, )",
           "OpenTelemetry.Extensions.Hosting": "[1.10.0, )",
           "OpenTelemetry.Instrumentation.Http": "[1.9.0, )",
@@ -494,6 +495,15 @@
           "Microsoft.Extensions.Diagnostics.Abstractions": "9.0.0",
           "Microsoft.Extensions.Logging.Configuration": "9.0.0",
           "OpenTelemetry.Api.ProviderBuilderExtensions": "1.10.0"
+        }
+      },
+      "OpenTelemetry.Exporter.Console": {
+        "type": "CentralTransitive",
+        "requested": "[1.10.0, )",
+        "resolved": "1.10.0",
+        "contentHash": "fTW/6FiHjRW8zhomj8RGHRE773LNSFY7zG/Suf5y7wkxxTpRQFo6sI1HDPp/RjAP+7aXFEqOT0nwVnbfFrZEzQ==",
+        "dependencies": {
+          "OpenTelemetry": "1.10.0"
         }
       },
       "Serilog.Extensions.Hosting": {
