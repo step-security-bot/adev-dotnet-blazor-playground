@@ -41,12 +41,26 @@ try
         .ConfigureResource(r => r.AddDetector(sp.GetRequiredService<ResourceCollection>()))
         .AddSource(ClientInstrumentation.ActivitySource.Name)
         .AddHttpClientInstrumentation()
-        // .AddOtlpExporter(x =>
-        // {
-        //     x.Endpoint = new Uri("http://localhost:4318/v1/traces");
-        //     x.Protocol = OtlpExportProtocol.HttpProtobuf;
-        //     x.HttpClientFactory = () => new HttpClient();
-        // })
+        //      .AddOtlpExporter(x =>
+        //      {
+        //          x.Endpoint = new Uri("http://localhost:4318/v1/traces");
+        //          // GRPC fails because of this https://github.com/open-telemetry/opentelemetry-dotnet/issues/5083
+        //          // HTTP fails because of the lack of multi threading
+        //          /* System.PlatformNotSupportedException: Cannot wait on monitors on this runtime.
+        // at System.Threading.Monitor.ObjWait(Int32 millisecondsTimeout, Object obj)
+        // at System.Threading.Monitor.Wait(Object obj, Int32 millisecondsTimeout)
+        // at System.Threading.ManualResetEventSlim.Wait(Int32 millisecondsTimeout, CancellationToken cancellationToken)
+        // at System.Threading.Tasks.Task.SpinThenBlockingWait(Int32 millisecondsTimeout, CancellationToken cancellationToken)
+        // at System.Threading.Tasks.Task.InternalWaitCore(Int32 millisecondsTimeout, CancellationToken cancellationToken)
+        // at System.Threading.Tasks.Task.InternalWait(Int32 millisecondsTimeout, CancellationToken cancellationToken)
+        // at OpenTelemetry.Exporter.OpenTelemetryProtocol.Implementation.ExportClient.BaseOtlpHttpExportClient`1[[OpenTelemetry.Proto.Collector.Trace.V1.ExportTraceServiceRequest, OpenTelemetry.Exporter.OpenTelemetryProtocol, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7bd6737fe5b67e3c]].SendHttpRequest(HttpRequestMessage request, CancellationToken cancellationToken)
+        // at OpenTelemetry.Exporter.OpenTelemetryProtocol.Implementation.ExportClient.BaseOtlpHttpExportClient`1[[OpenTelemetry.Proto.Collector.Trace.V1.ExportTraceServiceRequest, OpenTelemetry.Exporter.OpenTelemetryProtocol, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7bd6737fe5b67e3c]].SendExportRequest(ExportTraceServiceRequest request, DateTime deadlineUtc, CancellationToken cancellationToken)
+        // at OpenTelemetry.Exporter.OpenTelemetryProtocol.Implementation.Transmission.OtlpExporterTransmissionHandler`1[[OpenTelemetry.Proto.Collector.Trace.V1.ExportTraceServiceRequest, OpenTelemetry.Exporter.OpenTelemetryProtocol, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7bd6737fe5b67e3c]].TrySubmitRequest(ExportTraceServiceRequest request)
+        // */
+        //          x.Protocol = OtlpExportProtocol.HttpProtobuf;
+        //          x.HttpClientFactory = () => new HttpClient(new HttpClientHandler());
+        //          x.ExportProcessorType = ExportProcessorType.Simple;
+        //      })
         .AddConsoleExporter()
         .Build()
     );
@@ -55,11 +69,16 @@ try
         .AddMeter(ClientInstrumentation.ActivitySource.Name)
         .AddHttpClientInstrumentation()
         .AddRuntimeInstrumentation()
+        /*  System.PlatformNotSupportedException: Operation is not supported on this platform.
+   at System.Threading.Thread.ThrowIfNoThreadStart(Boolean internalThread)
+   at System.Threading.Thread.Start(Boolean captureContext, Boolean internalThread)
+   at System.Threading.Thread.Start() */
         // .AddOtlpExporter(x =>
         // {
-        //     x.Endpoint = new Uri("http://localhost:4318/v1/traces");
+        //     x.Endpoint = new Uri("http://localhost:4318/v1/metrics");
         //     x.Protocol = OtlpExportProtocol.HttpProtobuf;
-        //     x.HttpClientFactory = () => new HttpClient();
+        //     x.HttpClientFactory = () => new HttpClient(new HttpClientHandler());
+        //     x.ExportProcessorType = ExportProcessorType.Simple;
         // })
         // This is also a periodic exporter, so it breaks
         // .AddConsoleExporter()
@@ -72,13 +91,15 @@ try
     builder.Services.AddSerilog((sp, loggerConfiguration) =>
     {
         loggerConfiguration.ReadFrom.Configuration(configurationBuildTime)
+            // this also fails, probably because of the batching
             // .WriteTo.OpenTelemetry(openTelemetrySinkOptions =>
             // {
             //     openTelemetrySinkOptions.ResourceAttributes =
             //         new Dictionary<string, object>(
             //             sp.GetRequiredService<ResourceCollection>().Detect().Attributes
             //         );
-            //     openTelemetrySinkOptions.OnBeginSuppressInstrumentation = OpenTelemetry.SuppressInstrumentationScope.Begin;
+            //     openTelemetrySinkOptions.OnBeginSuppressInstrumentation = SuppressInstrumentationScope.Begin;
+            //     // openTelemetrySinkOptions.BatchingOptions = null;
             // })
             .Enrich.WithExceptionDetails()
             .WriteTo.Logger(l =>
