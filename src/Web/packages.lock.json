@@ -8,12 +8,6 @@
         "resolved": "9.0.0",
         "contentHash": "916w5kN0c5ytEuHAk6e1W8JLixlcEhAuKJLSBGdZUaVBuz/3E6r6qnGCdR9cyPvu2D+Stkbfv60Z05gwF/JnDA=="
       },
-      "OpenTelemetry.AutoInstrumentation.Runtime.Native": {
-        "type": "Direct",
-        "requested": "[1.9.0, )",
-        "resolved": "1.9.0",
-        "contentHash": "plOyOWCxPXc7rJhZkNFmxiOSR5+u/Mnr9dYoEpWvi7GpsvAMdH+57zEc3XhEP5lA2Op4euXyYM4vkGUNp30+5A=="
-      },
       "OpenTelemetry.Exporter.OpenTelemetryProtocol": {
         "type": "Direct",
         "requested": "[1.10.0, )",
@@ -451,12 +445,18 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.AspNetCore.Components.WebAssembly": "[9.0.0, )",
+          "OpenTelemetry.Exporter.OpenTelemetryProtocol": "[1.10.0, )",
+          "OpenTelemetry.Extensions.Hosting": "[1.10.0, )",
+          "OpenTelemetry.Instrumentation.Http": "[1.9.0, )",
+          "OpenTelemetry.Instrumentation.Runtime": "[1.9.0, )",
           "Serilog": "[4.1.0, )",
           "Serilog.Exceptions": "[8.4.0, )",
           "Serilog.Expressions": "[5.0.0, )",
           "Serilog.Extensions.Hosting": "[8.0.0, )",
           "Serilog.Settings.Configuration": "[8.0.4, )",
-          "Serilog.Sinks.BrowserConsole": "[8.0.0, )"
+          "Serilog.Sinks.BrowserConsole": "[8.0.0, )",
+          "Serilog.Sinks.OpenTelemetry": "[4.1.1, )",
+          "Shared": "[1.0.0, )"
         }
       },
       "Microsoft.AspNetCore.Components.WebAssembly": {

@@ -4,14 +4,14 @@ using OpenTelemetry.Resources;
 
 namespace Shared;
 
-public class MyResources(IHostEnvironment environment, VersionProvider versionProvider)
+public class ServerSideResource(IHostEnvironment environment, VersionProvider versionProvider)
     : IResourceDetector
 {
     // https://opentelemetry.io/docs/specs/otel/semantic-conventions/
     public Resource Detect()
     {
         var resources = ResourceBuilder.CreateDefault()
-            .AddService(Environment.GetEnvironmentVariable("APPLICATION_NAME") ?? "blazor-playground", null,
+            .AddService(Instrumentation.ServerServiceName, null,
                 versionProvider.Version)
             .AddEnvironmentVariableDetector()
             .AddAttributes([

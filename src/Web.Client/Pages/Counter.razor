@@ -1,9 +1,12 @@
 ﻿@page "/counter"
 @using System.Diagnostics.CodeAnalysis
+@using Shared
 @rendermode InteractiveAuto
 
 @inject IConfiguration Configuration
 @inject ILogger<Counter> Logger
+@inject IMyService MyService
+@inject NavigationManager NavigationManager
 
 <PageTitle>Counter</PageTitle>
 
@@ -41,13 +44,17 @@
   Throw exception
 </button>
 
+<p>Data from API: <span class="font-semibold italic">@Data</span></p>
+
 
 @code {
   private int _currentCount;
+  private string? Data { get; set; } = "Loading...";
 
-  protected override void OnInitialized()
+  protected override async Task OnInitializedAsync()
   {
     Logger.LogInformation("Hello from Counter.razor");
+    Data = await MyService.GetData(CancellationToken.None);
   }
 
   private void IncrementCount()

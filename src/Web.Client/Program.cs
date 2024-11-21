@@ -1,8 +1,13 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.JSInterop;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Serilog;
 using Serilog.Debugging;
 using Serilog.Exceptions;
+using Shared;
+using Web.Client.Otel;
 
 // Startup logger
 Log.Logger = new LoggerConfiguration()
@@ -23,17 +28,38 @@ try
 
     Log.Warning(
         "Building WebAssembly. This is only a warning because I am testing the bootstrap logger before .Net reads the appsettings.json for Serilog");
+
+    builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) })
+        .AddScoped<IMyService, ClientSideService>()
+        .AddSingleton<VersionProvider>();
+
+    builder.Services.AddSingleton<IResourceDetector, ClientSideResource>();
+    builder.Services.AddSingleton<ResourceCollection>();
+
+    // builder.Services.AddOpenTelemetry()
+    //     .ConfigureResource(r => r.AddDetector(s => s.GetRequiredService<ResourceCollection>()))
+    //     .WithMetrics(metrics => metrics
+    //         .AddRuntimeInstrumentation()
+    //         .AddHttpClientInstrumentation()
+    //         .AddOtlpExporter()
+    //     )
+    //     .WithTracing(tracing => tracing
+    //         .AddHttpClientInstrumentation()
+    //         .AddOtlpExporter()
+    //     );
+
+
     builder.Logging.ClearProviders();
     var configurationBuildTime = builder.Configuration;
     builder.Services.AddSerilog((sp, loggerConfiguration) =>
     {
         loggerConfiguration.ReadFrom.Configuration(configurationBuildTime)
-            // .WriteTo.Async(c => c.OpenTelemetry(openTelemetrySinkOptions =>
+            // .WriteTo.OpenTelemetry(openTelemetrySinkOptions =>
             //     openTelemetrySinkOptions.ResourceAttributes =
             //         new Dictionary<string, object>(
             //             sp.GetRequiredService<ResourceCollection>().Detect().Attributes
             //         )
-            // ))
+            // )
             .Enrich.WithExceptionDetails()
             .WriteTo.Logger(l =>
                 l.Filter.ByExcluding("SourceContext = 'Microsoft.Hosting.Lifetime'").WriteTo

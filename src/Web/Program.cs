@@ -31,9 +31,12 @@ try
         .AddInteractiveServerComponents()
         .AddInteractiveWebAssemblyComponents();
 
+    builder.Services.AddHttpClient();
+
+    builder.Services.AddScoped<IMyService, ServerSideService>();
 
     // add all resource detectors as IResourceDetector interface
-    builder.Services.AddSingleton<IResourceDetector, MyResources>();
+    builder.Services.AddSingleton<IResourceDetector, ServerSideResource>();
     // inject the resource detectors into the resource collection at one go
     builder.Services.AddSingleton<ResourceCollection>();
     builder.Services.AddSingleton<VersionProvider>();
@@ -52,6 +55,7 @@ try
         .WithTracing(tracing => tracing
             .AddHttpClientInstrumentation()
             .AddAspNetCoreInstrumentation()
+            .AddSource(ServerInstrumentation.ActivitySource.Name)
             .AddOtlpExporter()
         );
 
@@ -105,6 +109,12 @@ try
         .AddInteractiveServerRenderMode()
         .AddInteractiveWebAssemblyRenderMode()
         .AddAdditionalAssemblies(typeof(_Imports).Assembly);
+
+    app.MapGet("/api/data", async (IMyService service, CancellationToken cancellationToken) =>
+    {
+        string? data = await service.GetData(cancellationToken);
+        return data;
+    });
 
     app.Run();
 }
