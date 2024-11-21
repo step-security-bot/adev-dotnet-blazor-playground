@@ -16,6 +16,7 @@ public class ServerSideResource(IHostEnvironment environment, VersionProvider ve
             .AddEnvironmentVariableDetector()
             .AddAttributes([
                 new KeyValuePair<string, object>("dotnet.version", RuntimeInformation.FrameworkDescription),
+                new KeyValuePair<string, object>("dotnet.rid", RuntimeInformation.RuntimeIdentifier),
                 new KeyValuePair<string, object>("deployment.environment.name", environment.EnvironmentName),
             ])
             .Build();
@@ -27,8 +28,6 @@ public class ResourceCollection(IEnumerable<IResourceDetector> resources) : IRes
 {
     public Resource Detect()
     {
-        return ResourceBuilder.CreateEmpty()
-            .AddAttributes(resources.SelectMany(r => r.Detect().Attributes))
-            .Build();
+        return new Resource(resources.SelectMany(r => r.Detect().Attributes));
     }
 }

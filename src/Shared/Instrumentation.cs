@@ -10,10 +10,10 @@ public static class Instrumentation
 
 public static class ServerInstrumentation
 {
-    public static ActivitySource ActivitySource { get; } = new (Instrumentation.ServerServiceName);
+    public static ActivitySource ActivitySource { get; } = new(Instrumentation.ServerServiceName);
 }
 
 public static class ClientInstrumentation
 {
-    public static ActivitySource ActivitySource { get; } = new (Instrumentation.ClientServiceName);
+    public static ActivitySource ActivitySource { get; } = new(Instrumentation.ClientServiceName);
 }

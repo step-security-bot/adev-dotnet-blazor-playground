@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.JSInterop;
-using OpenTelemetry.Exporter;
+using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -37,30 +37,34 @@ try
     builder.Services.AddSingleton<IResourceDetector, ClientSideResource>();
     builder.Services.AddSingleton<ResourceCollection>();
 
-    builder.Services.AddOpenTelemetry()
-        .ConfigureResource(r => r.AddDetector(s => s.GetRequiredService<ResourceCollection>()))
-        .WithMetrics(metrics => metrics
-            .AddRuntimeInstrumentation()
-            .AddHttpClientInstrumentation()
-            .AddOtlpExporter(x =>
-            {
-                x.Endpoint = new Uri("http://localhost:4318/v1/metrics");
-                x.Protocol = OtlpExportProtocol.HttpProtobuf;
-                x.HttpClientFactory = () => new HttpClient();
-            })
-            .AddConsoleExporter()
-        )
-        .WithTracing(tracing => tracing
-            .AddHttpClientInstrumentation()
-            .AddSource(ClientInstrumentation.ActivitySource.Name)
-            .AddOtlpExporter(x =>
-            {
-                x.Endpoint = new Uri("http://localhost:4318/v1/traces");
-                x.Protocol = OtlpExportProtocol.HttpProtobuf;
-                x.HttpClientFactory = () => new HttpClient();
-            })
-            .AddConsoleExporter()
-        );
+    builder.Services.AddSingleton<TracerProvider>(sp => Sdk.CreateTracerProviderBuilder()
+        .ConfigureResource(r => r.AddDetector(sp.GetRequiredService<ResourceCollection>()))
+        .AddSource(ClientInstrumentation.ActivitySource.Name)
+        .AddHttpClientInstrumentation()
+        // .AddOtlpExporter(x =>
+        // {
+        //     x.Endpoint = new Uri("http://localhost:4318/v1/traces");
+        //     x.Protocol = OtlpExportProtocol.HttpProtobuf;
+        //     x.HttpClientFactory = () => new HttpClient();
+        // })
+        .AddConsoleExporter()
+        .Build()
+    );
+    builder.Services.AddSingleton<MeterProvider>(sp => Sdk.CreateMeterProviderBuilder()
+        .ConfigureResource(r => r.AddDetector(sp.GetRequiredService<ResourceCollection>()))
+        .AddMeter(ClientInstrumentation.ActivitySource.Name)
+        .AddHttpClientInstrumentation()
+        .AddRuntimeInstrumentation()
+        // .AddOtlpExporter(x =>
+        // {
+        //     x.Endpoint = new Uri("http://localhost:4318/v1/traces");
+        //     x.Protocol = OtlpExportProtocol.HttpProtobuf;
+        //     x.HttpClientFactory = () => new HttpClient();
+        // })
+        // This is also a periodic exporter, so it breaks
+        // .AddConsoleExporter()
+        .Build()
+    );
 
 
     builder.Logging.ClearProviders();
@@ -95,6 +99,8 @@ catch (Exception e)
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
 try
 {
+    var tracer = app.Services.GetRequiredService<TracerProvider>();
+    var meter = app.Services.GetRequiredService<MeterProvider>();
     logger.LogInformation("Starting WebAssembly application");
     await app.RunAsync();
 }

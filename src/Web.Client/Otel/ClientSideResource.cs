@@ -17,6 +17,7 @@ public class ClientSideResource(IWebAssemblyHostEnvironment environment, Version
             .AddEnvironmentVariableDetector()
             .AddAttributes([
                 new KeyValuePair<string, object>("dotnet.version", RuntimeInformation.FrameworkDescription),
+                new KeyValuePair<string, object>("dotnet.rid", RuntimeInformation.RuntimeIdentifier),
                 new KeyValuePair<string, object>("deployment.environment.name", environment.Environment),
             ])
             .Build();

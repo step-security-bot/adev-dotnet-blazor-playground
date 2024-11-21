@@ -1,3 +1,4 @@
+using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -69,7 +70,7 @@ try
                     new Dictionary<string, object>(
                         sp.GetRequiredService<ResourceCollection>().Detect().Attributes
                     );
-                openTelemetrySinkOptions.OnBeginSuppressInstrumentation = OpenTelemetry.SuppressInstrumentationScope.Begin;
+                openTelemetrySinkOptions.OnBeginSuppressInstrumentation = SuppressInstrumentationScope.Begin;
             }))
             .Enrich.WithExceptionDetails()
             ;
