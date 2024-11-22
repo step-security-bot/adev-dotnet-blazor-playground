@@ -33,6 +33,7 @@ try
         .AddInteractiveWebAssemblyComponents();
 
     builder.Services.AddHttpClient();
+    builder.Services.AddHealthChecks();
 
     builder.Services.AddScoped<IMyService, ServerSideService>();
 
@@ -113,6 +114,7 @@ try
         .AddInteractiveWebAssemblyRenderMode()
         .AddAdditionalAssemblies(typeof(_Imports).Assembly);
 
+    app.MapHealthChecks("/api/healthz");
     app.MapGet("/api/data", async (IMyService service, CancellationToken cancellationToken) =>
     {
         string? data = await service.GetData(cancellationToken);
