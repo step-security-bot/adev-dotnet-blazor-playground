@@ -14,8 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		package.json = package.json
 		README.md = README.md
 		tailwind.config.cjs = tailwind.config.cjs
-		docker-compose-coolify.yaml = docker-compose-coolify.yaml
-		docker-compose.yaml = docker-compose.yaml
+		docker-compose.coolify.yaml = docker-compose.coolify.yaml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "src\Shared\Shared.csproj", "{5CCC9A4A-C6B9-4525-BED8-E27DD3171413}"
