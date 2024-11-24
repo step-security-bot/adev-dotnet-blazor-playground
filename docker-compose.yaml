@@ -1,4 +1,4 @@
-﻿services:
+services:
   blazorapp:
     image: ghcr.io/alexaka1/adev-dotnet-blazor-playground:main
     environment:
