@@ -1,6 +1,6 @@
 ﻿services:
   blazorapp:
-    image: ghcr.io/alexaka1/blazor-playground:main
+    image: ghcr.io/alexaka1/adev-dotnet-blazor-playground:main
     environment:
       - SERVICE_FQDN_BLAZORAPP_8080
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Production}
