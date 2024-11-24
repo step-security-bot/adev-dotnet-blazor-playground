@@ -1,8 +1,6 @@
 ﻿services:
   blazorapp:
     build:
-      context: .
-      target: final
       dockerfile: src/Web/Dockerfile
     environment:
       - SERVICE_FQDN_BLAZORAPP_8080
