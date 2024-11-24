@@ -6,6 +6,8 @@ on:
     tags:
       - 'v*'
 permissions: { }
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   build:

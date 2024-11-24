@@ -15,6 +15,9 @@ RUN pnpm run tailwind:build:minify
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0@sha256:7d24e90a392e88eb56093e4eb325ff883ad609382a55d42f17fd557b997022ca AS build
 ARG BUILD_CONFIGURATION=Release
 ARG TARGETARCH
+RUN apt update; \
+    apt install -y python3; \
+    dotnet workload install wasm-tools;
 WORKDIR /src
 COPY ["Directory.Packages.props", "Directory.Build.props", "nuget.config", "./"]
 COPY ["src/Web/Web.csproj", "src/Web/"]
